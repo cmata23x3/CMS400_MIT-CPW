@@ -1,0 +1,23 @@
+{
+  "name": "unit2-viz",
+  "main": "index.js",
+  "version": "0.0.0",
+  "authors": [
+    "Christian Mata <christian.m.mata@gmail.com>"
+  ],
+  "description": "CMS.400 Unit Project Visualization",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.3",
+    "angular-charts": "https://github.com/chinmaymk/angular-charts.git#~0.2.7",
+    "lodash": "~3.7.0"
+  }
+}
