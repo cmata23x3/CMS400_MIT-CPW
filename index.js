@@ -27,14 +27,14 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
       resultEntry['stats']['mean'] = jStat.mean(store[key]).toFixed(3);
       resultEntry['stats']['median'] = jStat.median(store[key]);
       resultEntry['stats']['stdDev'] = jStat.stdev(store[key]).toFixed(3);
-    })
+    });
 
     return result;
   }
 })
 .service('filterData', function(){
   this.filter = function(rawData, category){
-    if(category === ''){//case if there is no category
+    if(category === 'All'){//case if there is no category
       return rawData
     }
     else{
