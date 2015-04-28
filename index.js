@@ -40,7 +40,7 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
     var result = []; //put the resulting {} into this array
     if(category == 'Year'){ //year
       //filter the rawData into each year
-      var years = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Grad'];
+      var years = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
       _.forEach(years, function(year){
         var filtData = filterData.byYear(rawData, year); //get filtered data;
         var res = smashDataWorker(filtData, [key]); //returns array of obj; obj=1 row
@@ -60,7 +60,7 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
       return result
     }
     else{//residence
-      var livingGroups = ['Ashdown House', 'Baker House', 'Burton-Conner House', 'East Campus', 'MacGregor House', 'Maseeh', 'McCormick House', 'New House', 'Next House', 'Random Hall', 'Senior Haus', 'Simmons Hall', 'FSILGs']
+      var livingGroups = ['Baker House', 'Burton-Conner House', 'East Campus', 'MacGregor House', 'Maseeh', 'McCormick House', 'New House', 'Next House', 'Random Hall', 'Senior Haus', 'Simmons Hall', 'FSILGs']
       var result;
       //init store
       var store = {};
