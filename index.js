@@ -139,7 +139,6 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
     var data;
 
     function updateChart(){
-      console.log('#'+element[0].id, ' This is the updateChart Data: ', data);
       $('#'+element[0].id).empty();
       d3Likert('#'+element[0].id, data, {height: attrs.height, width: attrs.width})
     }
@@ -172,11 +171,9 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
   $scope.updateCompare = function(){
     //rawData, key, category
     if($scope.activeQuestion === '' || $scope.category === ''){
-      console.log('passing b/c no params passed');
       return;
     }
     else{
-      console.log('ready to pass on!');
       // $scope.filterData = dataSmashingService.smashCompareData(data, invertHash[$scope.activeQuestion], 'Residence');
       $scope.filterData = dataSmashingService.smashCompareData(data, invertHash[$scope.activeQuestion], $scope.category);
     }
