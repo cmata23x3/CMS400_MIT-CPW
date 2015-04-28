@@ -24,9 +24,9 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
     _.forEach(keys, function(key){
       var resultEntry = _.find(result, _.matchesProperty('key', key));
       resultEntry['stats']['count'] = store[key].length;
-      resultEntry['stats']['mean'] = jStat.mean(store[key]);
+      resultEntry['stats']['mean'] = jStat.mean(store[key]).toFixed(3);
       resultEntry['stats']['median'] = jStat.median(store[key]);
-      resultEntry['stats']['stdDev'] = jStat.stdev(store[key]);
+      resultEntry['stats']['stdDev'] = jStat.stdev(store[key]).toFixed(3);
     })
 
     return result;

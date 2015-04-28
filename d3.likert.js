@@ -80,6 +80,11 @@ var d3Likert = function(element, dataObject, dimensions){
         .attr("class", "tooltip")
         .style("opacity", 0);
 
+    //set up table for mouseovers
+    var div2 = d3.select('body').append('div')
+      .attr('class', 'tooltip')
+      // .attr("class", 'tabletip')
+      .style('opacity', 0);
 
     // Add each rating row
     $.each(dataObject, function(index, data){
@@ -165,6 +170,33 @@ var d3Likert = function(element, dataObject, dimensions){
             .style("margin", "10px")
             .html('<i class="glyphicon glyphicon-info-sign">&nbsp;</i>' + data.name );
 
+            function mouseover(p) {
+                var g = d3.select(this).node().parentNode;
+                d3.select(g).style('cursor', "pointer");
+                d3.select(g).selectAll('rect').attr('class', 'hover');
+                d3.select(g).selectAll("circle").style("display","none");
+                d3.select(g).selectAll("text.value").style("display","block");
+                div2.transition()
+                    .duration(200)
+                    .style("opacity", 1);
+                div2.html('<table class="table tabletip"><tr><th>Count</th><th>Mean</th><th>Median</th><th>Std. Dev.</th></tr>'+
+                '<tr><td>'+data.stats.count+'</td><td>'+data.stats.mean+'</td><td>'+data.stats.median+'</td><td>'+data.stats.stdDev+
+                '</td></tr></table>')
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY+20) + "px");
+            }
+
+            function mouseout(p) {
+                var g = d3.select(this).node().parentNode;
+
+                d3.select(g).style('cursor', "normal");
+                d3.select(g).selectAll('rect').attr('class', 'no-hover');
+                d3.select(g).selectAll("circle").style("display","block");
+                d3.select(g).selectAll("text.value").style("display","none");
+                div2.transition()
+                    .duration(750)
+                    .style("opacity", 0);
+            }
 
     });
 
@@ -175,26 +207,4 @@ var d3Likert = function(element, dataObject, dimensions){
         .attr("transform", "translate(386," + (height - 40) + ")")
         .style("font", "12px 'Helvetica Neue'")
         .call(xAxis);
-
-    function mouseover(p) {
-        var g = d3.select(this).node().parentNode;
-        d3.select(g).style('cursor', "pointer");
-        d3.select(g).selectAll('rect').attr('class', 'hover');
-        d3.select(g).selectAll("circle").style("display","none");
-        d3.select(g).selectAll("text.value").style("display","block");
-        // g.append("stats")
-        //   .html('<table class="table">
-        //   <tr><th>Mean</th><th>Median</th><th>Standard Deviation</th></tr>
-        //   <tr><td>'+  +'</td></tr>
-        //   <table>')
-    }
-
-    function mouseout(p) {
-        var g = d3.select(this).node().parentNode;
-
-        d3.select(g).style('cursor', "normal");
-        d3.select(g).selectAll('rect').attr('class', 'no-hover');
-        d3.select(g).selectAll("circle").style("display","block");
-        d3.select(g).selectAll("text.value").style("display","none");
-    }
 };
