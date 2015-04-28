@@ -42,9 +42,7 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
       //filter the rawData into each year
       var years = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Grad'];
       _.forEach(years, function(year){
-        //TODO: add the filter back in!
-        // var filtData = filterData.byYear(year); //get filtered data;
-        var filtData = rawData;
+        var filtData = filterData.byYear(rawData, year); //get filtered data;
         var res = smashDataWorker(filtData, [key]); //returns array of obj; obj=1 row
         res[0]['name'] = year;
         result.push(res[0]);
@@ -62,10 +60,13 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
   }
 })
 .service('filterData', function(){
-  this.byYear = function(rawData){
-    //TODO: filter by year
-    console.log('should filter data by year');
-    return rawData;
+  this.byYear = function(rawData, year){
+    var filtered = _.filter(rawData, {'year': year});
+    return filtered;
+  }
+
+  this.byCourse = function(rawData, course){
+    //TODO: implement this!
   }
 
   this.filter = function(rawData, category){
