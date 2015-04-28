@@ -1,6 +1,6 @@
 var cpwViz = angular.module('cpwViz', ['angularCharts'])
 .value('filters', {
-  'options': ['All', 'Year', 'Course', 'Residence']
+  'options': ['', 'Year', 'Course', 'Residence']
 })
 .service('dataSmashingService', function(initObj){
   this.smashData = function(rawData, keys){
@@ -97,8 +97,25 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
 }])
 .controller('mainController', function($scope, dataSmashingService, filterData, filters){
   $scope.options = filters.options;
-  $scope.category = 'All';
+  $scope.category = '';
+  $scope.activeQuestion = '';
+  $scope.view = true;
 
   $scope.prefroshData = dataSmashingService.smashData(data, ['self_prefrosh_enjoyed', 'self_prefrosh_picture', 'self_prefrosh_decide']);
   $scope.overallData = dataSmashingService.smashData(data, ['academics_assignments', 'academics_exams', 'rep_groups', 'rep_my_groups', 'rep_other_groups', 'rep_groups_more', 'rep_my_living_groups','rep_other_living_groups','rep_living_groups_hosting','community', 'stress', 'interact', 'occurs_more', 'reminds', 'help_out', 'hosting_prefrosh', 'prefrosh_learn', 'share_exp', 'prefrosh_accurate', 'enjoy_cpw']);
+
+  var qs = _.values(questionHash);
+  qs.unshift('')
+  $scope.allQuestions = qs;
+
+  $scope.toOverall = function(){
+    $scope.view = true;
+    $('#compA').removeClass('active');
+    $('#overallA').addClass('active');
+  }
+  $scope.toComp = function(){
+    $scope.view = false;
+    $('#overallA').removeClass('active');
+    $('#compA').addClass('active');
+  }
 })

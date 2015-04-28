@@ -34,26 +34,44 @@
       border-radius: 5px;
       box-shadow: 10px 10px 5px #888888;
     }
+    #dash-compare{
+      margin: 15px;
+    }
     </style>
   </head>
   <body>
   <body>
     <div ng-app='cpwViz' ng-controller='mainController'>
-      <div id='dashboard'>
+      <div id='dashboard' ng-model='view'>
         <div id='dash-header'>
           <h1>CPW Survey Visualization</h1>
-          <div id='dash-filters'>
-            <!-- TODO: Add ng-repeat for the options -->
-            <select ng-model='category' ng-options='opt for opt in options'>
-            </select>
-          </div> <!-- dash-filters -->
+          <div id='dash-tabs'>
+            <ul class='nav nav-tabs'>
+              <li role='presentation' id='overallA' class='active'><a ng-click='toOverall()'>Overall</a></li>
+              <li role='presentation' id='compA'><a ng-click='toComp()'>Compare</a></li>
+            </ul>
+          </div> <!-- dash-tabs -->
         </div> <!-- dash-header -->
-        <div id='dash-body'>
+        <div id='dash-overall' ng-show='view'>
           <h2>As a prefrosh,</h2>
           <span id='likert_prefrosh' likert-viz='prefroshData' height=270 width=1000></span>
           <h2>You & CPW</h2>
           <span id='likert_overall' likert-viz='overallData' height=950 width=1000></span>
-        </div> <!-- dash-body -->
+        </div> <!-- dash-overall -->
+        <div id='dash-compare' ng-hide='view' class='row'>
+          <!-- TODO: Add ng-repeat for the options -->
+          <div id='compare-ctrl'>
+            <h4>Choose a question and category you would like to see.</h4>
+            <span>Questions: </span><select ng-model='activeQuestion' ng-options='ques for ques in allQuestions'></select>
+            <span>Category Filters: </span><select ng-model='category' ng-options='opt for opt in options'></select>
+            {{category}}
+          </div> <!-- compare-ctrl -->
+          <br>
+          <legend></legend>
+          <div id='compare-container'>
+            <h3>{{activeQuestion}}<h3>
+          </div> <!-- compare-container -->
+        </div> <!-- dash-compare -->
       </div> <!-- dashboard -->
     </div> <!-- cpwViz -->
   </body>
