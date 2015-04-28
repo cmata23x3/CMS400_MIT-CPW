@@ -37,6 +37,13 @@
     #dash-compare{
       margin: 15px;
     }
+    #compare-header{
+      margin:25px;
+      padding:5px;
+      background-color: #eee;
+      border-radius: 5px;
+      vertical-align: middle;
+    }
     </style>
   </head>
   <body>
@@ -62,14 +69,18 @@
           <!-- TODO: Add ng-repeat for the options -->
           <div id='compare-ctrl'>
             <h4>Choose a question and category you would like to see.</h4>
-            <span>Questions: </span><select ng-model='activeQuestion' ng-options='ques for ques in allQuestions'></select>
-            <span>Category Filters: </span><select ng-model='category' ng-options='opt for opt in options'></select>
-            {{category}}
+            <span>Questions: </span><select ng-model='activeQuestion' ng-options='ques for ques in allQuestions' ng-change='updateCompare()'></select>
+            <span>Category Filters: </span><select ng-model='category' ng-options='opt for opt in options' ng-change='updateCompare()'></select>
           </div> <!-- compare-ctrl -->
           <br>
           <legend></legend>
           <div id='compare-container'>
-            <h3>{{activeQuestion}}<h3>
+            <div id='compare-header' class='row'>
+              <h3 class='col-md-7'>{{activeQuestion}}</h3><h3 class='col-md-2'><small>broken down by:</small></h3> <h3 class='col-md-3'>{{category}}</h3>
+            </div> <!-- compare-header -->
+            <div id='compare-viz'>
+              <span id='likert_compare' likert-viz='filterData' height=950 width=1000></span>
+            </div> <!-- compare-viz -->
           </div> <!-- compare-container -->
         </div> <!-- dash-compare -->
       </div> <!-- dashboard -->

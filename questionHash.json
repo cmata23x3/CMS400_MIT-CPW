@@ -25,3 +25,5 @@ questionHash = {
     "prefrosh_accurate":"I think CPW accurately shows prefrosh what MIT is like.",
     "enjoy_cpw":"I enjoy CPW."
   }
+
+  invertHash = _.invert(questionHash);
