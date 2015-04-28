@@ -6,12 +6,10 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
 })
 .service('dataSmashingService', function(initObj){
   // TODO: Smash the data together in the correct format
-  this.smashPrefroshData = function(rawData){
-    console.log('smashing data');
-    var keyArr = ['self_prefrosh_enjoyed', 'self_prefrosh_picture', 'self_prefrosh_decide'];
-    var result = initObj.initArray(keyArr);
+  this.smashData = function(rawData, keys){
+    var result = initObj.initArray(keys);
     _.forEach(rawData, function(entry){
-      _.forEach(keyArr, function(key){
+      _.forEach(keys, function(key){
         var value = entry[key];
         if(_.isFinite(value)){
           var resultEntry = _.find(result, _.matchesProperty('key', key));
@@ -19,12 +17,8 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
         }
       });
     });
-
     console.log(result);
     return result;
-  }
-  this.smashOverallData = function(){
-
   }
 })
 .service('filterData', function(){
@@ -60,7 +54,7 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
     _.forEach(keys, function(key){
       var clone = _.cloneDeep(obj);
       clone.key = key; //insert key
-      clone.name = count;
+      clone.name = questionHash[key];
       result.push(clone);
       count += 1;
     });
@@ -70,39 +64,11 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
 .directive('likertViz', [function(){
   function link(scope, element, attrs){
     var data;
-    var likertData = [
-        {
-            "rating": {
-                1: 184,
-                2: 63,
-                3: 32,
-                4: 39,
-                5: 28,
-                6: 17,
-                7: 19
-            },
-            "name": "A first item to rate"
-        },
-        {
-            "rating": {
-                "1": "32",
-                "2": "35",
-                "3": "36",
-                "4": "70",
-                "5": "68",
-                "6": "83",
-                "7": "61"
-            },
-            "name": "A second item to rate"
-        }
-    ];
 
     function updateChart(){
-      // element.text(data);
       console.log('data changed!!!');
       console.log('This is the updateChart Data: ', data);
       d3Likert('#'+element[0].id, data, {height: attrs.height, width: attrs.width})
-      // d3Likert('#'+element[0].id, likertData, {height: 740, width: 1000 });
     }
 
     scope.$watch(attrs.likertViz, function(value){
@@ -115,9 +81,8 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
   };
 }])
 .controller('mainController', function($scope, dataSmashingService, filterData){
-  $scope.data = data; //store the data
   $scope.category = 'bleeeeep';
 
-  $scope.prefroshData = dataSmashingService.smashPrefroshData(data);
-  // $scope.renderData = dataSmashingService.smash(filterData.filter($scope.data, category));
+  $scope.prefroshData = dataSmashingService.smashData(data, ['self_prefrosh_enjoyed', 'self_prefrosh_picture', 'self_prefrosh_decide']);
+  $scope.overallData = dataSmashingService.smashData(data, ['academics_assignments', 'academics_exams', 'rep_groups', 'rep_my_groups', 'rep_other_groups', 'rep_groups_more', 'rep_my_living_groups','rep_other_living_groups','rep_living_groups_hosting','community', 'stress', 'interact', 'occurs_more', 'reminds', 'help_out', 'hosting_prefrosh', 'prefrosh_learn', 'share_exp', 'prefrosh_accurate', 'enjoy_cpw']);
 })

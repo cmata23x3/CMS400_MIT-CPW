@@ -155,13 +155,14 @@ var d3Likert = function(element, dataObject, dimensions){
             .attr("x", 0)
             .attr("class","chart-label")
             .attr("width", 380)
-            .attr("height", 40)
+            .attr("height", 60)
             .on("mouseover", mouseover)
             .on("mouseout", mouseout)
             .append("xhtml:body")
             .style("font", "12px 'Helvetica Neue'")
             .style("line-height", "16px")
             .style("background", "transparent")
+            .style("margin", "10px")
             .html('<i class="glyphicon glyphicon-info-sign">&nbsp;</i>' + data.name );
 
 

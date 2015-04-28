@@ -17,6 +17,7 @@
     <script src="./d3.likert.js"></script>
     <!-- Our Javascripts & JSON -->
     <script type="text/javascript" src="./responses.json"></script>
+    <script type="text/javascript" src="./questionHash.json"></script>
     <script src="./index.js"></script>
 
     <!-- CSS Styling -->
@@ -44,7 +45,8 @@
         <div id='dash-body'>
           <input ng-model='category'>
           <h2>As a prefrosh,</h2>
-          <span id='likert_prefrosh' likert-viz='prefroshData' height=740 width=1000></span>
+          <span id='likert_prefrosh' likert-viz='prefroshData' height=270 width=1000></span>
+          <span id='likert_overall' likert-viz='overallData' height=950 width=1000></span>
         </div> <!-- dash-body -->
       </div> <!-- dashboard -->
     </div> <!-- cpwViz -->
