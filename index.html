@@ -8,20 +8,45 @@
 
     <!-- Javascripts -->
     <script src="./bower_components/angular/angular.min.js"></script>
-    <script src="./bower_components/d3/d3.min.js"></script>
-    <script src="./bower_components/angular-charts/dist/angular-charts.min.js"></script>
+    <script src="./bower_components/d3/d3.js"></script>
+    <script src="./bower_components/angular-charts/dist/angular-charts.js"></script>
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
     <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./bower_components/lodash/lodash.js"></script>
+    <script src="http://cdn.jsdelivr.net/jstat/1.1.3/jstat.min.js"></script>
+    <script src="./d3.likert.js"></script>
     <!-- Our Javascripts & JSON -->
-    <script type="text/javascript" src="./responses-1.json"></script>
+    <script type="text/javascript" src="./responses.json"></script>
     <script src="./index.js"></script>
 
     <!-- CSS Styling -->
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+    <style type='text/css'>
+    body {
+      font-family: "helvetica";
+      color : #333;
+      /*background-color: #333;*/
+      margin: 2em;
+      }
+    </style>
   </head>
   <body>
-  <!-- <body ng-app='cmsViz' ng-controller='mainController'> -->
-    <h1>Hello World</h1>
+  <body>
+    <div ng-app='cpwViz' ng-controller='mainController'>
+      <div id='dashboard'>
+        <div id='dash-header'>
+          <h1>CPW Survey Visualization</h1>
+          <div id='dash-filters'>
+            <!-- TODO: Add ng-repeat for the options -->
+            <!-- <input> -->
+          </div> <!-- dash-filters -->
+        </div> <!-- dash-header -->
+        <div id='dash-body'>
+          <input ng-model='category'>
+          <h2>As a prefrosh,</h2>
+          <span id='likert_prefrosh' likert-viz='prefroshData' height=740 width=1000></span>
+        </div> <!-- dash-body -->
+      </div> <!-- dashboard -->
+    </div> <!-- cpwViz -->
   </body>
 </html>
