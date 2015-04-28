@@ -28,7 +28,7 @@ var d3Likert = function(element, dataObject, dimensions){
 
     var xScale = d3.scale.linear()
         .domain([1, 8])
-        .range([390, width]);
+        .range([390, (width-20)]);
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -176,13 +176,17 @@ var d3Likert = function(element, dataObject, dimensions){
         .style("font", "12px 'Helvetica Neue'")
         .call(xAxis);
 
-
     function mouseover(p) {
         var g = d3.select(this).node().parentNode;
         d3.select(g).style('cursor', "pointer");
         d3.select(g).selectAll('rect').attr('class', 'hover');
         d3.select(g).selectAll("circle").style("display","none");
         d3.select(g).selectAll("text.value").style("display","block");
+        // g.append("stats")
+        //   .html('<table class="table">
+        //   <tr><th>Mean</th><th>Median</th><th>Standard Deviation</th></tr>
+        //   <tr><td>'+  +'</td></tr>
+        //   <table>')
     }
 
     function mouseout(p) {

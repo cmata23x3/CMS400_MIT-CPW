@@ -39,13 +39,14 @@
           <h1>CPW Survey Visualization</h1>
           <div id='dash-filters'>
             <!-- TODO: Add ng-repeat for the options -->
-            <!-- <input> -->
+            <select ng-model='category' ng-options='opt for opt in options'>
+            </select>
           </div> <!-- dash-filters -->
         </div> <!-- dash-header -->
         <div id='dash-body'>
-          <input ng-model='category'>
           <h2>As a prefrosh,</h2>
           <span id='likert_prefrosh' likert-viz='prefroshData' height=270 width=1000></span>
+          <h2>You & CPW</h2>
           <span id='likert_overall' likert-viz='overallData' height=950 width=1000></span>
         </div> <!-- dash-body -->
       </div> <!-- dashboard -->
