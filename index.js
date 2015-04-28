@@ -50,13 +50,45 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
       return result
     }
     else if(category == 'Course'){ //course
-      console.log('doesnt work yet');
+      var courses = ['Course 1', 'Course 2', 'Course 3','Course 4','Course 5','Course 6','Course 7','Course 8','Course 9','Course 10','Course 11','Course 12','Course 14','Course 15','Course 16','Course 17','Course 18','Course 20','Course 21','Course 22','Course 24'];
+      _.forEach(courses, function(course){
+        var filtData = filterData.byCourse(rawData, course); //get filtered data;
+        var res = smashDataWorker(filtData, [key]); //returns array of obj; obj=1 row
+        res[0]['name'] = course;
+        result.push(res[0]);
+      });
+      return result
     }
     else{//residence
-      console.log('doesnt work yet');
+      var livingGroups = ['Ashdown House', 'Baker House', 'Burton-Conner House', 'East Campus', 'MacGregor House', 'Maseeh', 'McCormick House', 'New House', 'Next House', 'Random Hall', 'Senior Haus', 'Simmons Hall', 'FSILGs']
+      var result;
+      //init store
+      var store = {};
+      _.forEach(livingGroups, function(group){
+        store[group] = [];
+      });
+
+      //filter into groups
+      _.forEach(rawData, function(entry){
+        if(entry.living_group == null){
+          return; //skip
+        }
+        else if(store[entry.living_group]){//if its exists, add it to that array
+          store[entry.living_group].push(entry);
+        }
+        else{
+          //add it to FSILGs
+          store['FSILGs'].push(entry);
+        }
+      });
+
+      _.forEach(livingGroups, function(group){
+        var res = smashDataWorker(store[group], [key]); //returns array of obj; obj=1 row
+        res[0]['name'] = group;
+        result.push(res[0]);
+      });
+      return result
     }
-    //TODO: Flatten the results!
-    return result;
   }
 })
 .service('filterData', function(){
@@ -66,18 +98,8 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
   }
 
   this.byCourse = function(rawData, course){
-    //TODO: implement this!
-  }
-
-  this.filter = function(rawData, category){
-    if(category === 'All'){//case if there is no category
-      return rawData
-    }
-    else{
-      console.log('should filter')
-      // TODO: Add the filter logic
-      return rawData
-    }
+    var filtered = _.filter(rawData, {'course': course});
+    return filtered;
   }
 })
 .service('initObj', function(){
@@ -142,6 +164,9 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
 
   var qs = _.values(questionHash);
   qs.unshift('')
+  _.remove(qs, function(question){
+    return question == "Did you attend CPW when you were a prefrosh?" || question == "How much sleep, if any, did you lose during CPW?";
+  })
   $scope.allQuestions = qs;
 
   $scope.updateCompare = function(){
@@ -152,8 +177,8 @@ var cpwViz = angular.module('cpwViz', ['angularCharts'])
     }
     else{
       console.log('ready to pass on!');
-      $scope.filterData = dataSmashingService.smashCompareData(data, invertHash[$scope.activeQuestion], 'Year');
-      // $scope.filterData = dataSmashingService.smashCompareData(data, invertHash[$scope.activeQuestion], $scope.category);
+      // $scope.filterData = dataSmashingService.smashCompareData(data, invertHash[$scope.activeQuestion], 'Residence');
+      $scope.filterData = dataSmashingService.smashCompareData(data, invertHash[$scope.activeQuestion], $scope.category);
     }
   }
   $scope.toOverall = function(){
